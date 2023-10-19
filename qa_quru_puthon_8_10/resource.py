@@ -1,5 +1,5 @@
-from pathlib import Path
+import os
 
 
 def path(file_name):
-    return str(Path(__file__).parent.joinpath(f"file/{file_name}"))
+    return os.path.abspath(file_name)

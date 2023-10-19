@@ -4,55 +4,69 @@ from qa_quru_puthon_8_10 import resource
 
 
 class RegistrationPage:
+    def __init__(self):
+        self.registered_user_data = browser.element('.table').all('tr td:nth-child(2)')
 
     def open(self):
         browser.open("/automation-practice-form")
 
-    def registration_user(self, user):
-        browser.element("#firstName").type(user.first_name)
-        browser.element("#lastName").type(user.last_name)
-        browser.element("#userEmail").type(user.email)
-        browser.element('[for="gender-radio-1"]').click()
-        if user.gender == "Male":
+    def type_first_name(self, param):
+        browser.element("#firstName").type(param)
+
+    def type_last_name(self, param):
+        browser.element("#lastName").type(param)
+
+    def type_email(self, param):
+        browser.element("#userEmail").type(param)
+
+    def set_gender(self, param):
+        if param == "Male":
             browser.element('[for="gender-radio-1"]').click()
-        elif user.gender == "Female":
+        elif param == "Female":
             browser.element('[for="gender-radio-2"]').click()
         else:
             browser.element('[for="gender-radio-3"]').click()
-        browser.element("#userNumber").type(user.phone_number)
+
+    def type_mobile(self, param):
+        browser.element("#userNumber").type(param)
+
+    def fill_birthday(self, year, month, day):
         browser.element('#dateOfBirthInput').click()
-        browser.element('.react-datepicker__month-select').type(user.month)
-        browser.element('.react-datepicker__year-select').type(user.year)
+        browser.element('.react-datepicker__month-select').type(month)
+        browser.element('.react-datepicker__year-select').type(year)
         browser.element(
-            f'.react-datepicker__day--0{user.day}:not(.react-datepicker__day--outside-month)'
+            f'.react-datepicker__day--0{day}:not(.react-datepicker__day--outside-month)'
         ).click()
-        browser.element("#subjectsInput").type(user.subject)
+
+    def type_subjects(self, param):
+        browser.element("#subjectsInput").type(param)
         browser.all(".subjects-auto-complete__menu-list").first.click()
-        if user.hobby == "Sports":
+
+    def set_hobbies(self, param):
+        if param == "Sports":
             browser.element("[for='hobbies-checkbox-3']").click()
-        elif user.hobby == "Reading":
+        elif param == "Reading":
             browser.element("[for='hobbies-checkbox-2']").click()
-        elif user.hobby == "Music":
+        elif param == "Music":
             browser.element("[for='hobbies-checkbox-3']").click()
-        browser.element("#uploadPicture").send_keys(resource.path(user.file))
-        browser.element("#currentAddress").type(user.current_address)
+
+    def file_upload(self, param):
+        browser.element("#uploadPicture").send_keys(resource.path(param))
+
+    def type_current_address(self, param):
+        browser.element("#currentAddress").type(param)
+
+    def scroll_down(self):
         browser.element('[id="stateCity-label"]').perform(command.js.scroll_into_view)
+
+    def set_state_and_city(self, state, city):
         browser.element("#state").click()
-        browser.all(".css-11unzgr").element_by(have.text(user.state)).click()
+        browser.all(".css-11unzgr").element_by(have.text(state)).click()
         browser.element("#city").click()
-        browser.all(".css-11unzgr").element_by(have.text(user.city)).click()
+        browser.all(".css-11unzgr").element_by(have.text(city)).click()
+
+    def submit(self):
         browser.element("#submit").click()
 
-    def student_should_by_registred(self, user):
-        browser.all(".table-dark>tbody>tr>td:nth-child(2)").should(have.texts(
-            f"{user.first_name} {user.last_name}",
-            user.email,
-            user.gender,
-            user.phone_number,
-            f"{user.day} {user.month},{user.year}",
-            user.subject,
-            user.hobby,
-            user.file,
-            user.current_address,
-            f"{user.state} {user.city}"
-        ))
+    def title_should_have_text(self, param):
+        browser.element("#example-modal-sizes-title-lg").should(have.text(param))
