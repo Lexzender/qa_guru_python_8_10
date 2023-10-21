@@ -16,7 +16,7 @@ def test_Positive_Student_Registration_Form():
     registration_page.fill_birthday("1994", "May", "20")
     registration_page.type_subjects("Com")
     registration_page.set_hobbies("Music")
-    registration_page.file_upload("file/test.txt")
+    registration_page.file_upload("test.txt")
     registration_page.type_current_address("some text")
     registration_page.scroll_down()
     registration_page.set_state_and_city("Haryana", "Panipat")
