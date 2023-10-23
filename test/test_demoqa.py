@@ -14,7 +14,7 @@ def test_Positive_Student_Registration_Form():
     registration_page.set_gender("Male")
     registration_page.type_mobile("8927761453")
     registration_page.fill_birthday("1994", "May", "20")
-    registration_page.type_subjects("Com")
+    registration_page.type_subjects("Computer Science")
     registration_page.set_hobbies("Music")
     registration_page.file_upload("test.txt")
     registration_page.type_current_address("some text")
